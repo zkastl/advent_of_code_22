@@ -3,7 +3,7 @@ use std::fs;
 fn main() {
     println!("Hello, world!");
 
-    day1("C:\\Users\\zkast\\source\\repos\\advent_of_code_22\\day1.txt").expect("help!");
+    //day1("C:\\Users\\zkast\\source\\repos\\advent_of_code_22\\day1.txt").expect("help!");
     day2("C:\\Users\\zkast\\source\\repos\\advent_of_code_22\\day2.txt").expect("help!");
     
 }
@@ -51,11 +51,51 @@ fn day2(filepath: &str) -> Result<String, Box<dyn std::error::Error>> {
     let data = fs::read_to_string(filepath)?;
     let split = data.split("\n");
     //let mut elves = Vec::new();
+    let mut score = 0;
 
     for s in split {
-        
+        print!("{}: ", s);
+        match s {
+            "A X" => { 
+                println!("Rock/Rock: 4 points");
+                score += 4;
+            },
+            "A Y" => {
+                println!("Rock/Paper: 8 Points");
+                score += 8;
+            },
+            "A Z" => {
+                println!("Rock/Scissors: 3 Points");
+                score += 3;
+            },
+            "B X" => {
+                println!("Paper/Rock: 1 Point");
+                score += 1;
+            },
+            "B Y" => {
+                println!("Paper/Paper: 5 Points");
+                score += 6;
+            },
+            "B Z" => {
+                println!("Paper/Scissors: 9 Points");
+                score += 9;
+            },
+            "C X" => {
+                println!("Scissors/Rock: 7 Points");
+                score += 7;
+            },
+            "C Y" => {
+                println!("Scissors/Paper: 2 Points");
+                score += 2;
+            },
+            "C Z" => {
+                println!("Scissors/Scissors: 6 points");
+                score += 6;
+            },
+            &_ => println!("Error"),
+        }
     }
 
-
+    println!("\nTotal score: {}", score);
     Ok(data)
 }

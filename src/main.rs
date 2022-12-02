@@ -3,12 +3,12 @@ use std::fs;
 fn main() {
     println!("Hello, world!");
 
-    read_file_string("C:\\Users\\zkast\\source\\repos\\advent_of_code_22\\in1a.txt").expect("help!");
+    day1("C:\\Users\\zkast\\source\\repos\\advent_of_code_22\\day1.txt").expect("help!");
+    day2("C:\\Users\\zkast\\source\\repos\\advent_of_code_22\\day2.txt").expect("help!");
     
 }
 
-fn read_file_string(filepath: &str) -> Result<String, Box<dyn std::error::Error>> {
-    println!("entered function");
+fn day1(filepath: &str) -> Result<String, Box<dyn std::error::Error>> {
     let data = fs::read_to_string(filepath)?;
     //println!("{}",data);
 
@@ -17,14 +17,45 @@ fn read_file_string(filepath: &str) -> Result<String, Box<dyn std::error::Error>
     elves.push(0);
     for s in split {
         let pos = elves.len() - 1;
-        if s != "\n" {
-            elves[pos] += 1;
-            //println!("{}",s);
-        }
-        else {
-            println!("{}\n", elves[pos].to_string());
+        if s == "" {
+            println!("{}", elves[pos]);
             elves.push(0)
         }
+        else {
+            elves[pos] += s.parse::<i32>().unwrap();
+        }
     };
+
+    let max_val = elves.iter().max();
+    match max_val {
+        Some(max) => println!("Max Calories: {}", max),
+        None    => println!("empty"),
+    }
+
+    elves.sort();
+    let mut sum = 0;
+    for _i in 0..3 {
+        let val = elves.pop();
+        match val {
+            Some(x) => sum += x,
+            None => println!("error"),
+        }
+    }
+
+    println!("Max of top three elves: {}", sum);
+
+    Ok(data)
+}
+
+fn day2(filepath: &str) -> Result<String, Box<dyn std::error::Error>> {
+    let data = fs::read_to_string(filepath)?;
+    let split = data.split("\n");
+    //let mut elves = Vec::new();
+
+    for s in split {
+        
+    }
+
+
     Ok(data)
 }

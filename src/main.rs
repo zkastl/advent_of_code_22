@@ -13,9 +13,18 @@ fn read_file_string(filepath: &str) -> Result<String, Box<dyn std::error::Error>
     //println!("{}",data);
 
     let split = data.split("\n");
-    let mut elves = 
+    let mut elves = Vec::new();
+    elves.push(0);
     for s in split {
-        println!("{}",s);
-    }
+        let pos = elves.len() - 1;
+        if s != "\n" {
+            elves[pos] += 1;
+            //println!("{}",s);
+        }
+        else {
+            println!("{}\n", elves[pos].to_string());
+            elves.push(0)
+        }
+    };
     Ok(data)
 }

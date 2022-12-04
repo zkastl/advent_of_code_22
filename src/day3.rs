@@ -16,10 +16,12 @@ pub fn puzzle(filepath: &str) -> Result<String, Box<dyn std::error::Error>> {
 
     let split_data: Vec<&str> = data.split("\n").collect();
     let mut l: Vec<&str> = Vec::new();
-    for i in 0..split_data.len() {
-        
-        sum2 += find_priority(match_char2(l[0], l[1], l[2]));
-        l.clear();
+    for value in split_data {
+        l.push(value);
+        if l.len() == 3 {
+            sum2 += find_priority(match_char2(l[0], l[1], l[2]));
+            l.clear();
+        }
     }
     println!("Total sum: {}", sum2);
 

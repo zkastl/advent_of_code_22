@@ -8,27 +8,31 @@ pub fn puzzle(filepath: &str) -> Result<String, Box<dyn std::error::Error>> {
     let mut sum = 0;
 
     for line in split {
+        let ref_string = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
         let count = line.len() / 2;
         let s = line.split_at(count);
         let mut s1: Vec<char> = s.0.chars().collect();
         let mut s2: Vec<char> = s.1.chars().collect();
-        s1.sort();
-        s2.sort();
         for i in 0..count {
-            if s1[i] == s2[i] {
-                if s1[i].is_ascii_lowercase() {
-                    sum += s1[i].to_digit(10).expect("That's no number") - 91;
-                }
-                else if s1[i].is_uppercase() {
-                    sum += s1[i].to_digit(10).expect(&s1[i].to_string()) - 28;
+            for j in 0..count {
+                if s1[i].eq(&s2[j]) {
+                    let val = ref_string.find(s1[i]).unwrap() + 1;
+                    println!("Found match: {}, value: {}", s1[i], val);
+                    sum += val;
+                    break;
                 }
             }
+            
         }
     }
 
     println!("Total sum: {}", sum);
 
     Ok(data)
+}
+
+fn match_char(str1: &str, str2: &str) -> char {
+    return 'a';
 }
 
 // a = ascii 92, z = ascii 122

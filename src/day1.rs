@@ -10,7 +10,7 @@ pub fn puzzle(filepath: &str) -> Result<String, Box<dyn std::error::Error>> {
 
     for s in split {
         let last_pos = elves.len() - 1;
-        if s.is_empty() {
+        if s.is_empty() || s == "\r\n" {
             elves.push(0)
         }
         else {

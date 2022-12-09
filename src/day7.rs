@@ -20,22 +20,20 @@ pub fn puzzle(filepath: &str) -> Result<String, Box<dyn std::error::Error>> {
     Ok(data)
 }
 
-fn create_file_struct(history: Vec::<&str>, mut directory: Directory) -> Directory {
+fn map_filetree(name: String, history: Vec::<&str>, mut directory: Directory) -> Directory {
 
-    if history.len() < 2 {
-        return Directory::default();
-    }
-
+    let mut local_map: Directory = Directory { name: name, files: Vec::new(), subdirectories: Vec::new() };
+    
     // Reach each line
-    for line in history {
-        let tokens: Vec::<&str> = line.split(" ").collect();
+    for line in 0..history.len() {
+        let tokens: Vec::<&str> = history[line].split(" ").collect();
         match tokens[0] {
             "$" => {
                 match tokens[1] {
-                    "ls" => {
-                        for 
-                    },
-                    "cd" => println!("Change directoyr"),
+                    "cd" => {
+                        for dir in &directory.subdirectories {
+                            
+                    }
                     _ => println!("UNSUPPORTED COMMAND")
                 }
             }

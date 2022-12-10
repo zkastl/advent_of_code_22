@@ -31,8 +31,15 @@ fn map_filetree(name: String, history: Vec::<&str>, mut directory: Directory) ->
             "$" => {
                 match tokens[1] {
                     "cd" => {
-                        for dir in &directory.subdirectories {
-                            
+                        match tokens[2] {
+                            ".." => {
+                                return local_map;
+                            }
+                            &_ => {
+                                map_filetree(tokens[2].to_string(), history, directory);
+                            }
+                        }
+
                     }
                     _ => println!("UNSUPPORTED COMMAND")
                 }

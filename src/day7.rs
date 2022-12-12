@@ -20,12 +20,13 @@ fn map_filetree(name: String, history: Vec::<&str>, mut directory: Directory) ->
         subdirectories: Vec::new()
     };
     
+    let mut line: usize = 0;
     // Reach each line
-    for line in 0..history.len() {
+    while line < history.len() {
+        println!("{}", history[line]);
         let tokens: Vec::<&str> = history[line].split(" ").collect();
         match tokens[0] {
             "$" => {
-                println!("Processing command: {} {}", tokens[0], tokens[1]);
                 match tokens[1] {
                     "cd" => {
                         match tokens[2] {
@@ -34,38 +35,57 @@ fn map_filetree(name: String, history: Vec::<&str>, mut directory: Directory) ->
                             }
 
                             "/" => {
-                                continue;
                             }
 
-                            &_ => {                               
+                            &_ => {   
+                                let new_history = history[line+1..history.len()].to_vec();                            
                                 local_map.subdirectories.push(
                                     map_filetree(tokens[2].to_string(),
-                                    history[line..history.len()].to_vec(),
+                                    new_history,
                                     Directory::default()));
 
                             }
                         }
                     }
                     "ls" => {
-                        continue;
+                        let mut j: usize = line+1;
+                        while j < history.len() {
+                            let tokens: Vec::<&str> = history[line].split(" ").collect();
+                            match tokens[0] {
+                                "$" => {
+                                    line += j;
+                                    break;
+                                }
+
+                                "dir" => {
+                                    local_map.subdirectories.push(
+                                        Directory {
+                                            name: tokens[1].to_string(),
+                                            files: Vec::new(),
+                                            subdirectories: Vec::new()
+                                        });
+                                }
+
+                                &_ => local_map.files.push(File {
+                                    name: tokens[1].to_string(),
+                                    size: tokens[0].parse::<usize>().unwrap(),
+                                }),
+
+                            }
+
+                            j += 1;
+                        }
                     }
                     _ => println!("UNSUPPORTED COMMAND")
                 }
             }
 
-            "dir" => {
-                println!("Skipping directory line...");
-                continue;
-            }
-
             _ => {
-                println!("Found local file: {}", tokens[1]);
-                local_map.files.push(
-                    File {name: tokens[1].to_string(), size: tokens[0].parse::<usize>().unwrap() });
-                    continue;
 
             }
         }
+
+        line += 1;
     }
 
     return local_map;

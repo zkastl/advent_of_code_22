@@ -4,9 +4,9 @@ using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 
-namespace Test
+namespace Aoc2022
 {
-    public class Program
+    public class Aoc2022Day7
     {
         public static readonly uint MAX_CAPACITY       = 70000000;
         public static readonly uint UPDATE_REQUIREMENT = 30000000;
@@ -76,7 +76,7 @@ namespace Test
             }
 
             uint totalSize = root.GetSize();
-            Program.FREE_SPACE = MAX_CAPACITY - totalSize;
+            Aoc2022Day7.FREE_SPACE = MAX_CAPACITY - totalSize;
 
             Console.WriteLine("Printing Directory...");
             root.PrettyPrint();
@@ -119,10 +119,10 @@ namespace Test
                 Console.Write("-");
             Console.WriteLine(" " + Name + " (dir, size=" + dirSize + ")");
 
-            if (Program.FREE_SPACE + dirSize >= Program.UPDATE_REQUIREMENT && dirSize < Program.CHOSEN_DIRECTORY.Value)
+            if (Aoc2022Day7.FREE_SPACE + dirSize >= Aoc2022Day7.UPDATE_REQUIREMENT && dirSize < Aoc2022Day7.CHOSEN_DIRECTORY.Value)
             {
                 Console.WriteLine("***");
-                Program.CHOSEN_DIRECTORY = new KeyValuePair<string, uint>(Name, dirSize);
+                Aoc2022Day7.CHOSEN_DIRECTORY = new KeyValuePair<string, uint>(Name, dirSize);
             }
 
             foreach (Directory d in Subdirectories)

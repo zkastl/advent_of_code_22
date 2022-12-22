@@ -6,7 +6,7 @@ using System.Runtime.CompilerServices;
 
 namespace Aoc2022
 {
-    public class Aoc2022Day7
+    public class Day7
     {
         public static readonly uint MAX_CAPACITY       = 70000000;
         public static readonly uint UPDATE_REQUIREMENT = 30000000;
@@ -76,7 +76,7 @@ namespace Aoc2022
             }
 
             uint totalSize = root.GetSize();
-            Aoc2022Day7.FREE_SPACE = MAX_CAPACITY - totalSize;
+            Day7.FREE_SPACE = MAX_CAPACITY - totalSize;
 
             Console.WriteLine("Printing Directory...");
             root.PrettyPrint();
@@ -119,10 +119,10 @@ namespace Aoc2022
                 Console.Write("-");
             Console.WriteLine(" " + Name + " (dir, size=" + dirSize + ")");
 
-            if (Aoc2022Day7.FREE_SPACE + dirSize >= Aoc2022Day7.UPDATE_REQUIREMENT && dirSize < Aoc2022Day7.CHOSEN_DIRECTORY.Value)
+            if (Day7.FREE_SPACE + dirSize >= Day7.UPDATE_REQUIREMENT && dirSize < Day7.CHOSEN_DIRECTORY.Value)
             {
                 Console.WriteLine("***");
-                Aoc2022Day7.CHOSEN_DIRECTORY = new KeyValuePair<string, uint>(Name, dirSize);
+                Day7.CHOSEN_DIRECTORY = new KeyValuePair<string, uint>(Name, dirSize);
             }
 
             foreach (Directory d in Subdirectories)

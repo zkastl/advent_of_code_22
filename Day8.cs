@@ -31,18 +31,50 @@ namespace Aoc2022
             }
 
             // Transform the map into a list of Visibles
-            char[,] transform = new char[99, 100];
+            char[,] transform = new char[99, 100] ;
             for(int row = 0; row < 99; row++)
             {
                 for(int col = 0; col < 100; col++)
                 {
+                    transform[row,col] = 'V';
+                    // Check left
+                    for(int i = col; i > 0; i--)
+                    {
+                        if(map[row,i] > map[row,col])
+                        {
+                            transform[row,col] = 'I';
+                            break;
+                        }
+                    }
+                    // Check Top
+                    for(int i = row; i > 0; i--)
+                    {
+                        if(map[i,col] > map[row,col])
+                        {
+                            transform[row,col] = 'I';
+                            break;
+                        }
+                    }
+                    // Check Right
+                    for(int i = col; i < 100; i++)
+                    {
+                        if(map[row,i] > map[row,col])
+                        {
+                            transform[row,col] = 'I';
+                            break;
+                        }
+                    }
+                    // Check Down
+                    for(int i = row; i < 99; i++)
+                    {
+                        if(map[i,col] > map[row,col])
+                        {
+                            transform[row,col] = 'I';
+                            break;
+                        }
+                    }
                 }    
             }
-        }
-
-        internal static char[,] IsVisible(ushort[,] map)
-        {
-            return new char[0,0];
         }
     }
 }

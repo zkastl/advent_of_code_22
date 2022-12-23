@@ -4,16 +4,16 @@ using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 
-namespace Aoc2022
+namespace Aoc2022.cs_src
 {
     public class Day7
     {
-        public static readonly uint MAX_CAPACITY       = 70000000;
+        public static readonly uint MAX_CAPACITY = 70000000;
         public static readonly uint UPDATE_REQUIREMENT = 30000000;
         public static uint FREE_SPACE;
         public static KeyValuePair<string, uint> CHOSEN_DIRECTORY = new KeyValuePair<string, uint>("", UPDATE_REQUIREMENT);
 
-        public static void Main(string[] args)
+        public static void Puzzle(string[] args)
         {
             Directory root = new Directory("/");
             Guid rootPtr = root.GetRefId();
@@ -35,7 +35,7 @@ namespace Aoc2022
             while (position < history.Count)
             {
                 string[] tokens = history[position].Split(' ');
-                switch(tokens[0])
+                switch (tokens[0])
                 {
                     case "$":
                         if (tokens[1] == "cd" && tokens[2] == "/")
@@ -76,7 +76,7 @@ namespace Aoc2022
             }
 
             uint totalSize = root.GetSize();
-            Day7.FREE_SPACE = MAX_CAPACITY - totalSize;
+            FREE_SPACE = MAX_CAPACITY - totalSize;
 
             Console.WriteLine("Printing Directory...");
             root.PrettyPrint();
@@ -161,7 +161,7 @@ namespace Aoc2022
             return _ids.GetOrCreateValue(obj).Id;
         }
 
-        public static T GetObjectByRef<T>(Guid valid) where T: class
+        public static T GetObjectByRef<T>(Guid valid) where T : class
         {
             return _ids.Where(x => x.Value.Id == valid).First().Key as T;
         }

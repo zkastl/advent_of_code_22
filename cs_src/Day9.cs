@@ -14,6 +14,7 @@ namespace Aoc2022.cs_src
         public static void Puzzle()
         {
             double MAN_THRESH = Math.Sqrt(2);
+            
 
             using (StreamReader sr = new StreamReader(new FileStream(Environment.CurrentDirectory + "/day9.txt", FileMode.Open)))
             {
@@ -22,6 +23,7 @@ namespace Aoc2022.cs_src
 
                 int[] head = new int[2];
                 int[] tail = new int[2];
+                var visited = new HashSet<int[]>{ tail };
 
                 // Read in a line and perform its actions
                 while (!sr.EndOfStream)
@@ -58,7 +60,7 @@ namespace Aoc2022.cs_src
 
                         if (euclid > MAN_THRESH)
                         {
-                            Console.WriteLine("Threshold Exceeded, Euclid Distance: " + euclid);
+                            //Console.WriteLine("Threshold Exceeded, Euclid Distance: " + euclid);
                             int[] newTail = new int[] { tail[0], tail[1] };
                             double min = euclid;
                             for (int j = 0; j < 8; j++)
@@ -66,22 +68,45 @@ namespace Aoc2022.cs_src
                                 int[] delta = MapGrid(j);
                                 int newX = (tail[0] + delta[0]);
                                 int newY = (tail[1] + delta[1]);
-                                double newDistance = EuclidDistance(head[0], head[1], (tail[0] + delta[0]), (tail[1]+ delta[1]));
+                                double newDistance = EuclidDistance(head[0], head[1], newX, newY);
 
                                 if (newDistance < min)
                                 {
                                     min = newDistance;
-                                    newTail = delta;
+                                    newTail = new int[] { newX, newY };
                                 }
                             }
 
                             tail = newTail;
+                            visited.Add(newTail);
+                            
                         }
-                        else
-                            Console.WriteLine("No movement required.");
                     }
+
+                    PrintGrid(visited);
+                    //Console.WriteLine("Head location: (" + head[0] + "," + head[1] + ")");
+                    //Console.WriteLine("Tail location: (" + tail[0] + "," + tail[1] + ")");
                 }
+
+                Console.WriteLine("Number of unique locations visited: " + visited.Count);
             }
+        }
+
+        static void PrintGrid(HashSet<int[]> visited)
+        {
+            Console.SetBufferSize(601, 601);
+            for (int i = 0; i < Console.BufferHeight; i++)
+            {
+                for (int j = 0; j < Console.BufferWidth; j++)
+                {
+                    if (visited.Contains(new[] { i, j }))
+                        Console.Write("#");
+                    else
+                        Console.Write(".");
+                }
+                Console.WriteLine();
+            }
+            Console.WriteLine();
         }
 
         static double EuclidDistance(int p1, int p2, int q1, int q2)

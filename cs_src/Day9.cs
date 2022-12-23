@@ -60,9 +60,9 @@ namespace Aoc2022.cs_src
                         {
                             Console.WriteLine("Threshold Exceeded, Euclid Distance: " + euclid);
                             int[] newTail = new int[] { tail[0], tail[1] };
+                            double min = euclid;
                             for (int j = 0; j < 8; j++)
                             {
-                                double min = euclid;
                                 int[] delta = MapGrid(j);
                                 int newX = (tail[0] + delta[0]);
                                 int newY = (tail[1] + delta[1]);
@@ -97,11 +97,11 @@ namespace Aoc2022.cs_src
             switch (pos)
             {
                 case 0:
-                    return new int[] { -1, -1 };
-                case 1:
-                    return new int[] { -1, 0 };
-                case 2:
                     return new int[] { -1, 1 };
+                case 1:
+                    return new int[] { 0, 1 };
+                case 2:
+                    return new int[] { 1, 1 };
                 case 3:
                     return new int[] { -1, 0 };
                 case 4:
@@ -109,9 +109,11 @@ namespace Aoc2022.cs_src
                 case 5:
                     return new int[] { 1, 0 };
                 case 6:
-                    return new int[] { 1, 0 };
+                    return new int[] { -1, -1 };
                 case 7:
-                    return new int[] { 1, 1 };
+                    return new int[] { 0, -1 };
+                case 8:
+                    return new int[] { 1, -1 };
 
                 default:
                     return new int[2];
